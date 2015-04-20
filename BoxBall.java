@@ -2,48 +2,49 @@ import java.awt.*;
 import java.awt.geom.*;
 
 /**
- * Class BoxBall - a graphical ball that moves at a constant rate in
- * the x and y axes and bounces off of 'walls' as defined by values passed in
- * to the BoxBall Constructor
- * 
- * This class  is a precursor to implementing Pong
+ * Class BouncingBall - a graphical ball that observes the effect of gravity. The ball
+ * has the ability to move. Details of movement are determined by the ball itself. It
+ * will fall downwards, accelerating with time due to the effect of gravity, and bounce
+ * upward again when hitting the ground.
  *
  * This movement can be initiated by repeated calls to the "move" method.
  * 
- * @author Bill Crosbie
- * 
- * @version 2011.07.31
+ * @author Jacqueline Mascenik
+ *
+ * @version 4/20/15
  */
 
 public class BoxBall
 {
     private static final int GRAVITY = 3;  // effect of gravity
 
-    // private int ballDegradation = 2;
+    //private int ballDegradation = 2;
     private Ellipse2D.Double circle;
     private Color color;
     private int diameter;
     private int xPosition;
     private int yPosition;
-    private final int bottomWall;          // y position of bottom Wall
-    private final int topWall;             // y position of top Wall
-    private final int leftWall;            // x position of left Wall
-    private final int rightWall;           // x position of right Wall
+    //private final int groundPosition;
+    private final int bottomwall;      // y position of ground
+    private final int topwall;
+    private final int leftwall;
+    private final int rightwall;   
     private Canvas canvas;
-    private int ySpeed = 4 ;                // initial downward speed
+    private int ySpeed = 4;                // initial downward speed
     private int xSpeed = 7;
 
     /**
-     * Constructor for objects of class BoxBall
+     * Constructor for objects of class BouncingBall
      *
      * @param xPos  the horizontal coordinate of the ball
      * @param yPos  the vertical coordinate of the ball
      * @param ballDiameter  the diameter (in pixels) of the ball
      * @param ballColor  the color of the ball
+     * @param groundPos  the position of the ground (where the wall will bounce)
      * @param drawingCanvas  the canvas to draw this ball on
      */
     public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor,
-                        Canvas drawingCanvas)
+                          Canvas drawingCanvas)
     {
         xPosition = xPos;
         yPosition = yPos;
@@ -51,10 +52,10 @@ public class BoxBall
         diameter = ballDiameter;
         //groundPosition = groundPos;
         canvas = drawingCanvas;
-        leftWall = 0;
-        rightWall = 600;
-        topWall = 0;
-        bottomWall = 500;
+        leftwall = 0;
+        rightwall = 600;
+        topwall = 0;
+        bottomwall = 500;
     }
 
     /**
@@ -89,28 +90,21 @@ public class BoxBall
 
         // check if it has hit the ground
 //         if(yPosition >= (groundPosition - diameter) && ySpeed > 0) {
-//             yPosition = (int)(groundPosition - diameter);
-//             ySpeed = -ySpeed + ballDegradation; 
-//         }
-
-        // WALL CHECKS
-        if (xPosition < leftWall ) {
-            xSpeed = -xSpeed;
-        }
-        
-        if (xPosition > rightWall ) {
-            xSpeed = -xSpeed;
-        }
-        
-        if (yPosition < topWall ) {
-            ySpeed = -ySpeed;
-        }
-        
-        if (yPosition > bottomWall ) {
-            ySpeed = -ySpeed;
-        }
-        
-
+//              yPosition = (int)(groundPosition - diameter);
+//              ySpeed = -ySpeed + ballDegradation; 
+//       }
+        if (xPosition < leftwall){
+                xSpeed = -xSpeed;
+            }
+        if (xPosition > rightwall){
+                xSpeed = -xSpeed;
+            }
+            if (yPosition < topwall){
+                ySpeed = -ySpeed;
+            }
+        if (yPosition > bottomwall){
+                ySpeed = -ySpeed;
+            }
         // draw again at new position
         draw();
     }    

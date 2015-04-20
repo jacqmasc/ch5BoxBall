@@ -9,13 +9,9 @@ import java.awt.geom.*;
  *
  * This movement can be initiated by repeated calls to the "move" method.
  * 
- * @author Bill Crosbie
- * 
- * @author Michael Kölling (mik)
- * @author David J. Barnes
- * @author Bruce Quig
+ * @author Jacqueline Mascenik
  *
- * @version 2011.07.31
+ * @version 4/20/15
  */
 
 public class BouncingBall
@@ -28,9 +24,14 @@ public class BouncingBall
     private int diameter;
     private int xPosition;
     private int yPosition;
-    private final int groundPosition;      // y position of ground
+    private final int groundPosition;
+    //private final int bottomwall;      // y position of ground
+    //private final int topwall;
+    //private final int leftwall;
+    //private final int rightwall;   
     private Canvas canvas;
     private int ySpeed = 1;                // initial downward speed
+    //private int xSpeed = 7;
 
     /**
      * Constructor for objects of class BouncingBall
@@ -43,7 +44,7 @@ public class BouncingBall
      * @param drawingCanvas  the canvas to draw this ball on
      */
     public BouncingBall(int xPos, int yPos, int ballDiameter, Color ballColor,
-                        int groundPos, Canvas drawingCanvas)
+                         int groundPos, Canvas drawingCanvas)
     {
         xPosition = xPos;
         yPosition = yPos;
@@ -51,6 +52,10 @@ public class BouncingBall
         diameter = ballDiameter;
         groundPosition = groundPos;
         canvas = drawingCanvas;
+        //leftwall = 0;
+        //rightwall = 600;
+        //topwall = 0;
+        //bottomwall = 500;
     }
 
     /**
@@ -81,14 +86,26 @@ public class BouncingBall
         // compute new position
         ySpeed += GRAVITY;
         yPosition += ySpeed;
-        xPosition +=4;
+        xPosition +=4; 
+       // xPosition += xSpeed;
 
         // check if it has hit the ground
         if(yPosition >= (groundPosition - diameter) && ySpeed > 0) {
-            yPosition = (int)(groundPosition - diameter);
-            ySpeed = -ySpeed + ballDegradation; 
-        }
-
+             yPosition = (int)(groundPosition - diameter);
+             ySpeed = -ySpeed + ballDegradation; 
+         }
+//         if (xPosition < leftwall){
+//                 xSpeed = -xSpeed;
+//             }
+//         if (xPosition > rightwall){
+//                 xSpeed = -xSpeed;
+//             }
+//         if (yPosition < topwall){
+//                 ySpeed = -ySpeed;
+//             }
+//         if (yPosition > bottomwall){
+//                 ySpeed = -ySpeed;
+//             }
         // draw again at new position
         draw();
     }    
